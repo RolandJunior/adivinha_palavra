@@ -1,2 +1,3 @@
 # Adivinha Palavra
-Programa para adivinhar uma palavra escolhida aleatoriamente de um dicionário.
+Uma palavra é escolhida aleatoriamente de um dicionário.
+O computador vai tentar adivinhá-la somente sabendo o número de caracteres.
