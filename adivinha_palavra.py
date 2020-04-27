@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import random
+import random, time
 
 # Carrega alfabeto e gera dict para contagem de letras
 with open('alfabeto.txt') as arquivo:
@@ -21,6 +21,9 @@ palavra = random.choice(dicionario)
 num_caracteres = len(palavra)
 print(f'\nA palavra escolhida foi "{palavra}"" e ela tem {num_caracteres} caracteres.\n')
 x = input('Tecle ENTER para começar a adivinhação:')
+
+# Inicia timer
+t1 = time.perf_counter()
 
 # Filtra as que tem o número de caracteres correto
 dic_filtrado = [i for i in dicionario if len(i) == num_caracteres]
@@ -43,5 +46,7 @@ for letra in alfabeto_ordenado:
     if letra == palavra[caracter]:
       resultado[caracter] = letra
 resultado = ''.join(resultado)
+t2 = time.perf_counter()
 print(f'\nA palavra é "{resultado}" e foram testadas {tentativas} letras diferentes.')
+print(f'O programa gastou {t2-t1:.4f} segundos para adivinhá-la.')
 
