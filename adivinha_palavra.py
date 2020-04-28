@@ -37,16 +37,22 @@ alfabeto_ordenado = {k:v for k,v in sorted(alfabeto.items(), key=lambda item: it
 # Identifica palavra
 c = '_'
 resultado = list(c * num_caracteres)
-tentativas = 0
+tentativas = erros = 0
+erradas = []
 for letra in alfabeto_ordenado:
-  if resultado.count(c) == 0:
+  if resultado.count(c) == 0: #Sai se já achou todas as letras
     break
-  tentativas += 1  
-  for caracter in range(num_caracteres):
-    if letra == palavra[caracter]:
-      resultado[caracter] = letra
+  tentativas += 1
+  if palavra.find(letra) == -1: #Marca letra errada
+    erros += 1
+    erradas.append(letra)
+  else: #Acha posição de letra certa
+    for caracter in range(num_caracteres):
+      if letra == palavra[caracter]:
+        resultado[caracter] = letra
 resultado = ''.join(resultado)
 t2 = time.perf_counter()
-print(f'\nA palavra é "{resultado}" e foram testadas {tentativas} letras diferentes.')
+print(f'\nA palavra é "{resultado}"')
 print(f'O programa gastou {t2-t1:.4f} segundos para adivinhá-la.')
+print(f'Foram testadas {tentativas} letras e {erros} estavam erradas: {", ".join(erradas)}')
 
