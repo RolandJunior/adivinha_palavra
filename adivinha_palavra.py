@@ -4,17 +4,23 @@ import random, time
 from collections import Counter
 
 def seleciona_letra(dic):
-    x = len(testadas)
-    return Counter(''.join(dic)).most_common(x+1)[x][0]
+    x = 0
+    while True:
+        l = Counter(''.join(dic)).most_common(x+1)[x][0]
+        x += 1
+        if l not in testadas:
+            return l            
 
-def testa_letra(letra):
-    testadas.append(letra)
-    if palavra.find(letra) == -1:
-        erradas.append(letra)
+def testa_letra(l):
+    testadas.append(l)
+    if palavra.find(l) == -1:
+        erradas.append(l)
+        return 1
     else:
         for pos in range(num_caracteres):
-            if letra == palavra[pos]:
-                resultado[pos] = letra
+            if l == palavra[pos]:
+                resultado[pos] = l
+        return 0
 
 # Carrega dicionário e conta palavras
 with open('dicionario.txt') as arquivo:
@@ -43,7 +49,11 @@ testadas = []
 erradas = []
 resultado = list('_' * num_caracteres)
 while resultado.count('_') > 0:
-    testa_letra(seleciona_letra(dic_filtrado))
+    letra = seleciona_letra(dic_filtrado)
+    letra_stat = testa_letra(letra)
+    # Remove do dicionário palavras com letras erradas
+    if letra_stat == 1: 
+        dic_filtrado = [i for i in dic_filtrado if letra not in i]
 
 # Mostra resultados
 resultado = ''.join(resultado)
