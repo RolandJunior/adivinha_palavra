@@ -3,6 +3,11 @@
 import random, time
 from collections import Counter
 
+class Dicionario():
+    def __init__(self, arquivo):
+        self.palavras = arquivo.read().splitlines()
+        self.quantidade = len(self.palavras)
+
 def seleciona_letra(dic):
     x = 0
     while True:
@@ -24,16 +29,16 @@ def testa_letra(l):
 
 # Carrega dicionário e conta palavras
 with open('dicionario.txt') as arquivo:
-    dicionario = arquivo.read().splitlines()
-    p = f'{len(dicionario):,}'.replace(',','.') 
+    dic = Dicionario(arquivo)
+quant = f'{dic.quantidade:,}'.replace(',','.') 
 
 # Abertura do teste
-print(f'\nO computador tentará adivinhar uma palavra escolhida aleatoriamente de um dicionário de {p} palavras.')
+print(f'\nO computador tentará adivinhar uma palavra escolhida aleatoriamente de um dicionário de {quant} palavras.')
 print('A única informação que ele receberá será o número de caracteres da palavra.')
 x = input('Tecle ENTER para gerar a palavra:')
 
 # Seleciona aleatoriamente uma palavra do dicionário e calcula seu número de caracteres
-palavra = random.choice(dicionario)
+palavra = random.choice(dic.palavras)
 num_caracteres = len(palavra)
 print(f'A palavra escolhida foi "{palavra}"" e ela tem {num_caracteres} caracteres.')
 x = input('Tecle ENTER para começar a adivinhação:')
@@ -42,7 +47,7 @@ x = input('Tecle ENTER para começar a adivinhação:')
 t1 = time.perf_counter()
 
 # Filtra as palavras que tem o número de caracteres correto
-dic_filtrado = [i for i in dicionario if len(i) == num_caracteres]
+dic_filtrado = [i for i in dic.palavras if len(i) == num_caracteres]
 
 # Identifica a palavra
 testadas = []
